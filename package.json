@@ -1,0 +1,74 @@
+{
+  "name": "multi-nation-input",
+  "version": "1.1.0",
+  "description": "International phone input with country picker and validation. Works on React Native (iOS/Android) and web via react-native-web.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "react-native": "src/index.js",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "src",
+    "docs/images",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "require": "./index.js",
+      "types": "./index.d.ts",
+      "react-native": "./src/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && mkdir -p dist && cp index.js index.d.ts README.md dist/ && cp -R src dist/",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build",
+    "test": "node scripts/test-utils.mjs",
+    "example:install": "npm install --prefix example/web --legacy-peer-deps && npm install --prefix example/web-form --legacy-peer-deps && npm install --prefix example/mobile",
+    "example:web": "npm run example:install && npm run dev --prefix example/web",
+    "example:web-form": "npm install --prefix example/web-form --legacy-peer-deps && npm run dev --prefix example/web-form",
+    "demo:build": "npm install --prefix example/web-form --legacy-peer-deps && npm run build --prefix example/web-form",
+    "demo:preview": "npm run demo:build && npm run preview --prefix example/web-form",
+    "example:mobile": "npm run example:install && npm run start --prefix example/mobile",
+    "example:all": "npm run example:install && concurrently -n web,mobile -c blue,magenta \"npm run dev --prefix example/web\" \"npm run start --prefix example/mobile\""
+  },
+  "keywords": [
+    "react-native",
+    "react-native-web",
+    "web",
+    "input",
+    "phone",
+    "country",
+    "validation",
+    "international",
+    "multi-nation"
+  ],
+  "author": "Vikash Kumar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vikashwebb/multi-nation-input.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vikashwebb/multi-nation-input/issues"
+  },
+  "homepage": "https://github.com/vikashwebb/multi-nation-input#readme",
+  "demo": "https://multi-nation-input-demo.vercel.app",
+  "type": "module",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-native": ">=0.60.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native-web": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  }
+}

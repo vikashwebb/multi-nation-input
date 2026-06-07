@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "Multi Nation Input Demo",
+    "slug": "multi-nation-input-demo",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#f3f4f6"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#f3f4f6"
+      }
+    },
+    "plugins": [
+      "expo-asset"
+    ]
+  }
+}
