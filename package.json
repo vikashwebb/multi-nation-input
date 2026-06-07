@@ -1,6 +1,6 @@
 {
   "name": "multi-nation-input",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "International phone input with country picker and validation. Works on React Native (iOS/Android) and web via react-native-web.",
   "main": "index.js",
   "types": "index.d.ts",
