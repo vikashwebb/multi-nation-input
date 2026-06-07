@@ -1,53 +1,37 @@
 # Sample Projects
 
-Three demo apps that use the local package via `file:../..`.
+## Web form demo (hosted on Netlify)
 
-## Web form demo (recommended before go-live)
+**Live:** https://multi-nation-input.netlify.app/
 
-Full registration form with **4 phone inputs**, **package preview**, **npm README preview**, and a **shareable demo URL**.
+**GitHub:** https://github.com/vikashwebb/multi-nation-input
 
-```bash
-npm run example:web-form
-```
+**npm:** https://www.npmjs.com/package/multi-nation-input
 
-Open http://localhost:5180
-
-Static build preview (production-like):
+Build locally:
 
 ```bash
-npm run demo:preview
+npm run demo:build
 ```
 
-Deploy to Vercel for a public demo URL:
+Output: `example/web-form/dist/`
 
-```bash
-cd example/web-form
-npx vercel
-```
+### Deploy to Netlify
 
-Then set `VITE_DEMO_URL=https://your-url.vercel.app` in Vercel environment variables.
+1. Push repo to GitHub
+2. [Netlify](https://app.netlify.com) → **Add new site** → **Import from Git**
+3. Select `vikashwebb/multi-nation-input`
+4. Netlify reads `netlify.toml` automatically
+5. Set site name to `multi-nation-input` → URL becomes `https://multi-nation-input.netlify.app`
 
-## Web (simple single input)
+## Simple web demo
 
 ```bash
 npm run example:web
 ```
-
-Open http://localhost:5173
 
 ## Mobile (Expo)
 
 ```bash
 npm run example:mobile
 ```
-
-Scan the QR code with **Expo Go** on your phone, or press `i` for iOS simulator / `a` for Android emulator.
-
-## Run web + mobile together
-
-```bash
-npm run example:all
-```
-
-- Web: http://localhost:5173
-- Mobile: Expo dev tools in the terminal

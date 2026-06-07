@@ -1,6 +1,7 @@
 import React from 'react';
 import { Linking, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
-import { PACKAGE_META, getDemoUrl } from './packageMeta';
+import { LINKS, PACKAGE_META } from './packageMeta';
+import { useLayout } from './useLayout';
 
 function openUrl(url) {
   if (Platform.OS === 'web') {
@@ -11,33 +12,37 @@ function openUrl(url) {
   Linking.openURL(url);
 }
 
-function LinkButton({ label, url }) {
+function LinkCard({ label, value, url, accent }) {
   return (
-    <Pressable style={styles.linkButton} onPress={() => openUrl(url)}>
-      <Text style={styles.linkButtonText}>{label}</Text>
+    <Pressable
+      style={[styles.linkCard, { borderColor: accent }]}
+      onPress={() => openUrl(url)}
+    >
+      <Text style={[styles.linkCardLabel, { color: accent }]}>{label}</Text>
+      <Text style={styles.linkCardValue} numberOfLines={2}>
+        {value}
+      </Text>
     </Pressable>
   );
 }
 
 export default function PackagePreview() {
-  const demoUrl = getDemoUrl();
+  const { isMobile, contentPadding } = useLayout();
 
   return (
-    <View style={styles.wrapper}>
-      <View style={styles.card}>
-        <View style={styles.headerRow}>
-          <View style={styles.headerCopy}>
-            <Text style={styles.badge}>Package preview</Text>
-            <Text style={styles.packageName}>{PACKAGE_META.name}</Text>
-            <Text style={styles.version}>v{PACKAGE_META.version}</Text>
-            <Text style={styles.description}>{PACKAGE_META.description}</Text>
+    <View style={[styles.wrapper, { paddingHorizontal: contentPadding }]}>
+      <View style={styles.hero}>
+        <View style={styles.heroTop}>
+          <View style={styles.brandBlock}>
+            <Text style={styles.badge}>multi-nation-input</Text>
+            <Text style={[styles.title, isMobile && styles.titleMobile]}>
+              International phone input
+            </Text>
+            <Text style={styles.subtitle}>{PACKAGE_META.description}</Text>
           </View>
 
-          <View style={styles.metaBox}>
-            <Text style={styles.metaLabel}>License</Text>
-            <Text style={styles.metaValue}>{PACKAGE_META.license}</Text>
-            <Text style={[styles.metaLabel, styles.metaSpacing]}>Author</Text>
-            <Text style={styles.metaValue}>{PACKAGE_META.author}</Text>
+          <View style={styles.versionPill}>
+            <Text style={styles.versionText}>v{PACKAGE_META.version}</Text>
           </View>
         </View>
 
@@ -46,15 +51,25 @@ export default function PackagePreview() {
           <Text style={styles.installCommand}>{PACKAGE_META.installCommand}</Text>
         </View>
 
-        <View style={styles.demoUrlBox}>
-          <Text style={styles.demoUrlLabel}>Live demo URL</Text>
-          <Text style={styles.demoUrlValue} selectable>
-            {demoUrl}
-          </Text>
-          <Text style={styles.demoUrlHint}>
-            Share this link before go-live. Set a permanent URL with{' '}
-            <Text style={styles.mono}>VITE_DEMO_URL</Text> when deploying.
-          </Text>
+        <View style={[styles.linksGrid, isMobile && styles.linksGridMobile]}>
+          <LinkCard
+            label="Live demo"
+            value={LINKS.demo}
+            url={LINKS.demo}
+            accent="#6366f1"
+          />
+          <LinkCard
+            label="GitHub"
+            value={LINKS.github}
+            url={LINKS.github}
+            accent="#0f172a"
+          />
+          <LinkCard
+            label="npm package"
+            value={LINKS.npm}
+            url={LINKS.npm}
+            accent="#cb3837"
+          />
         </View>
 
         <View style={styles.featureRow}>
@@ -64,50 +79,6 @@ export default function PackagePreview() {
             </View>
           ))}
         </View>
-
-        <View style={styles.linkRow}>
-          <LinkButton label="npm package" url={PACKAGE_META.npmUrl} />
-          <LinkButton label="GitHub" url={PACKAGE_META.githubUrl} />
-          <LinkButton label="Open demo" url={demoUrl} />
-        </View>
-      </View>
-
-      <View style={styles.npmCard}>
-        <Text style={styles.npmTitle}>npm README preview</Text>
-        <Text style={styles.npmSubtitle}>
-          How your package page will look after publish.
-        </Text>
-
-        <View style={styles.npmBlock}>
-          <Text style={styles.npmHeading}># {PACKAGE_META.name}</Text>
-          <Text style={styles.npmBody}>{PACKAGE_META.description}</Text>
-        </View>
-
-        <View style={styles.npmBlock}>
-          <Text style={styles.npmHeading}>Live Demo</Text>
-          <Text style={styles.npmLink}>{demoUrl}</Text>
-        </View>
-
-        <View style={styles.npmBlock}>
-          <Text style={styles.npmHeading}>Installation</Text>
-          <Text style={styles.npmCode}>{PACKAGE_META.installCommand}</Text>
-        </View>
-
-        <View style={styles.npmBlock}>
-          <Text style={styles.npmHeading}>Features</Text>
-          {PACKAGE_META.features.map((feature) => (
-            <Text key={feature} style={styles.npmBullet}>
-              • {feature}
-            </Text>
-          ))}
-        </View>
-
-        <View style={styles.screenshotPlaceholder}>
-          <Text style={styles.screenshotTitle}>Screenshot placeholder</Text>
-          <Text style={styles.screenshotHint}>
-            Capture this form and save as docs/images/demo.png before publish.
-          </Text>
-        </View>
       </View>
     </View>
   );
@@ -116,228 +87,143 @@ export default function PackagePreview() {
 const styles = StyleSheet.create({
   wrapper: {
     width: '100%',
-    maxWidth: 1100,
-    gap: 20,
+    maxWidth: 1200,
+    alignSelf: 'center',
     marginBottom: 24,
   },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 20,
+  hero: {
+    backgroundColor: '#ffffff',
+    borderRadius: 24,
     padding: 24,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
-    shadowColor: '#0f172a',
-    shadowOpacity: 0.06,
-    shadowRadius: 18,
-    shadowOffset: { width: 0, height: 8 },
+    borderColor: 'rgba(99, 102, 241, 0.12)',
+    shadowColor: '#312e81',
+    shadowOpacity: 0.08,
+    shadowRadius: 32,
+    shadowOffset: { width: 0, height: 16 },
+    ...(Platform.OS === 'web'
+      ? { boxShadow: '0 20px 50px rgba(49, 46, 129, 0.08)' }
+      : {}),
   },
-  headerRow: {
-    flexDirection: Platform.OS === 'web' ? 'row' : 'column',
+  heroTop: {
+    flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
     gap: 16,
-    marginBottom: 18,
+    marginBottom: 20,
+    flexWrap: 'wrap',
   },
-  headerCopy: {
+  brandBlock: {
     flex: 1,
+    minWidth: 240,
   },
   badge: {
     alignSelf: 'flex-start',
-    backgroundColor: '#fef3c7',
-    color: '#b45309',
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+    backgroundColor: '#eef2ff',
+    color: '#4338ca',
+    paddingHorizontal: 12,
+    paddingVertical: 5,
     borderRadius: 999,
     fontSize: 12,
     fontWeight: '700',
-    marginBottom: 10,
+    marginBottom: 12,
     overflow: 'hidden',
   },
-  packageName: {
-    fontSize: 24,
+  title: {
+    fontSize: 34,
     fontWeight: '800',
-    color: '#111827',
-  },
-  version: {
-    fontSize: 14,
-    color: '#6b7280',
-    marginTop: 4,
+    color: '#0f172a',
+    letterSpacing: -0.5,
     marginBottom: 8,
   },
-  description: {
+  titleMobile: {
+    fontSize: 26,
+  },
+  subtitle: {
     fontSize: 15,
-    lineHeight: 22,
-    color: '#4b5563',
+    lineHeight: 24,
+    color: '#64748b',
+    maxWidth: 640,
   },
-  metaBox: {
-    minWidth: 140,
-    backgroundColor: '#f9fafb',
-    borderRadius: 12,
-    padding: 14,
+  versionPill: {
+    backgroundColor: '#f8fafc',
+    borderRadius: 999,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
   },
-  metaLabel: {
-    fontSize: 11,
+  versionText: {
+    fontSize: 13,
     fontWeight: '700',
-    color: '#6b7280',
-    textTransform: 'uppercase',
-  },
-  metaValue: {
-    fontSize: 14,
-    color: '#111827',
-    fontWeight: '600',
-  },
-  metaSpacing: {
-    marginTop: 10,
+    color: '#475569',
   },
   installBox: {
     backgroundColor: '#0f172a',
-    borderRadius: 12,
-    padding: 14,
-    marginBottom: 14,
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
   },
   installLabel: {
     fontSize: 11,
     fontWeight: '700',
     color: '#94a3b8',
     textTransform: 'uppercase',
+    letterSpacing: 0.8,
     marginBottom: 6,
   },
   installCommand: {
     fontSize: 15,
     color: '#f8fafc',
-    fontFamily: Platform.OS === 'web' ? 'monospace' : undefined,
+    fontFamily: Platform.OS === 'web' ? 'ui-monospace, monospace' : undefined,
   },
-  demoUrlBox: {
-    backgroundColor: '#eff6ff',
-    borderRadius: 12,
+  linksGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+    marginBottom: 16,
+  },
+  linksGridMobile: {
+    flexDirection: 'column',
+  },
+  linkCard: {
+    flex: 1,
+    minWidth: 200,
+    backgroundColor: '#f8fafc',
+    borderRadius: 16,
     padding: 14,
-    marginBottom: 14,
-    borderWidth: 1,
-    borderColor: '#bfdbfe',
+    borderWidth: 1.5,
+    borderColor: '#e2e8f0',
   },
-  demoUrlLabel: {
+  linkCardLabel: {
     fontSize: 11,
-    fontWeight: '700',
-    color: '#1d4ed8',
+    fontWeight: '800',
     textTransform: 'uppercase',
+    letterSpacing: 0.6,
     marginBottom: 6,
   },
-  demoUrlValue: {
-    fontSize: 15,
-    color: '#1e3a8a',
-    fontWeight: '600',
-    marginBottom: 6,
-  },
-  demoUrlHint: {
-    fontSize: 12,
-    color: '#3b82f6',
+  linkCardValue: {
+    fontSize: 13,
+    color: '#334155',
     lineHeight: 18,
-  },
-  mono: {
-    fontFamily: Platform.OS === 'web' ? 'monospace' : undefined,
-    fontWeight: '700',
+    fontWeight: '500',
   },
   featureRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
-    marginBottom: 16,
   },
   featurePill: {
-    backgroundColor: '#f3f4f6',
+    backgroundColor: '#f1f5f9',
     borderRadius: 999,
     paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingVertical: 7,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
   },
   featureText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#374151',
-  },
-  linkRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  linkButton: {
-    backgroundColor: '#2563eb',
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: 10,
-  },
-  linkButtonText: {
-    color: '#fff',
-    fontSize: 13,
-    fontWeight: '700',
-  },
-  npmCard: {
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 24,
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-  },
-  npmTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#111827',
-    marginBottom: 4,
-  },
-  npmSubtitle: {
-    fontSize: 13,
-    color: '#6b7280',
-    marginBottom: 16,
-  },
-  npmBlock: {
-    marginBottom: 14,
-  },
-  npmHeading: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#111827',
-    marginBottom: 6,
-  },
-  npmBody: {
-    fontSize: 14,
-    color: '#4b5563',
-    lineHeight: 20,
-  },
-  npmLink: {
-    fontSize: 14,
-    color: '#2563eb',
-  },
-  npmCode: {
-    fontSize: 13,
-    color: '#111827',
-    backgroundColor: '#f3f4f6',
-    padding: 10,
-    borderRadius: 8,
-    fontFamily: Platform.OS === 'web' ? 'monospace' : undefined,
-    overflow: 'hidden',
-  },
-  npmBullet: {
-    fontSize: 14,
-    color: '#4b5563',
-    lineHeight: 22,
-  },
-  screenshotPlaceholder: {
-    marginTop: 8,
-    borderWidth: 2,
-    borderStyle: 'dashed',
-    borderColor: '#d1d5db',
-    borderRadius: 12,
-    padding: 20,
-    alignItems: 'center',
-  },
-  screenshotTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#374151',
-    marginBottom: 4,
-  },
-  screenshotHint: {
-    fontSize: 12,
-    color: '#6b7280',
-    textAlign: 'center',
-    lineHeight: 18,
+    color: '#475569',
   },
 });

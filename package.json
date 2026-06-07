@@ -31,7 +31,8 @@
     "demo:build": "npm install --prefix example/web-form --legacy-peer-deps && npm run build --prefix example/web-form",
     "demo:preview": "npm run demo:build && npm run preview --prefix example/web-form",
     "example:mobile": "npm run example:install && npm run start --prefix example/mobile",
-    "example:all": "npm run example:install && concurrently -n web,mobile -c blue,magenta \"npm run dev --prefix example/web\" \"npm run start --prefix example/mobile\""
+    "example:all": "npm run example:install && concurrently -n web,mobile -c blue,magenta \"npm run dev --prefix example/web\" \"npm run start --prefix example/mobile\"",
+    "publish:otp": "echo 'Usage: npm publish --otp=YOUR_6_DIGIT_CODE  (enable 2FA at npmjs.com/settings/vikashwebb/security)'"
   },
   "keywords": [
     "react-native",
@@ -54,7 +55,7 @@
     "url": "https://github.com/vikashwebb/multi-nation-input/issues"
   },
   "homepage": "https://github.com/vikashwebb/multi-nation-input#readme",
-  "demo": "https://multi-nation-input-demo.vercel.app",
+  "demo": "https://multi-nation-input.netlify.app/",
   "type": "module",
   "peerDependencies": {
     "react": ">=16.8.0",

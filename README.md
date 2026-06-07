@@ -4,34 +4,25 @@ International phone input with country picker, dial codes, and validation.
 
 Works on **React Native** (iOS/Android) and **web** using the same package via `react-native-web`.
 
+## Links
+
+- **Live demo:** https://multi-nation-input.netlify.app/
+- **GitHub:** https://github.com/vikashwebb/multi-nation-input
+- **npm:** https://www.npmjs.com/package/multi-nation-input
+
 ## Live Demo
 
-**[Open interactive demo](https://multi-nation-input-demo.vercel.app)** — registration form with 4 phone inputs + npm package preview.
+**[Open interactive demo](https://multi-nation-input.netlify.app/)** — registration form with 4 phone inputs.
 
-Local preview:
+## Screenshots
 
-```bash
-npm run example:web-form
-```
+**Desktop**
 
-Open http://localhost:5180
+![Multi Nation Input — desktop demo](./docs/images/demo-desktop.png)
 
-Deploy your own demo URL (Vercel):
+**Mobile**
 
-```bash
-cd example/web-form
-npm install --legacy-peer-deps
-npm run build
-npx vercel
-```
-
-Set `VITE_DEMO_URL` in Vercel to your final URL (e.g. `https://your-demo.vercel.app`).
-
-## Screenshot
-
-![Multi Nation Input demo](./docs/images/demo.png)
-
-> Save your screenshot as `docs/images/demo.png`. See [docs/images/README.md](./docs/images/README.md) for capture steps.
+![Multi Nation Input — mobile demo](./docs/images/demo-mobile.png)
 
 ## Features
 
@@ -132,36 +123,9 @@ This package uses React Native primitives (`View`, `TextInput`, `Modal`, etc.). 
 
 ## Testing
 
-### 1. Automated utility tests
-
 ```bash
 npm test
 ```
-
-Runs validation, formatting, and country search checks.
-
-### 2. Web demo (fastest visual test)
-
-```bash
-npm run example:web
-```
-
-Then open **http://localhost:5173** in your browser. You can type a phone number, open the country picker, and see validation output live.
-
-### 3. React Native app
-
-In your React Native or Expo project:
-
-```bash
-npm install /path/to/multi-nation-input
-# or: npm install ../multi-nation-input
-```
-
-```jsx
-import { MultiNationInput } from 'multi-nation-input';
-```
-
-Then run your app with `npx expo start` or `npx react-native run-ios` / `run-android`.
 
 ## License
 

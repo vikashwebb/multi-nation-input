@@ -1,6 +1,10 @@
 import rootPackage from '../../../package.json';
 
-const GITHUB_REPO = 'https://github.com/vikashwebb/multi-nation-input';
+export const LINKS = {
+  demo: 'https://multi-nation-input.netlify.app/',
+  github: 'https://github.com/vikashwebb/multi-nation-input',
+  npm: 'https://www.npmjs.com/package/multi-nation-input',
+};
 
 export const PACKAGE_META = {
   name: rootPackage.name,
@@ -8,10 +12,10 @@ export const PACKAGE_META = {
   description: rootPackage.description,
   license: rootPackage.license,
   author: rootPackage.author,
-  npmUrl: `https://www.npmjs.com/package/${rootPackage.name}`,
-  githubUrl: GITHUB_REPO,
+  npmUrl: LINKS.npm,
+  githubUrl: LINKS.github,
+  demoUrl: import.meta.env.VITE_DEMO_URL || LINKS.demo,
   installCommand: `npm install ${rootPackage.name}`,
-  demoUrl: import.meta.env.VITE_DEMO_URL || '',
   features: [
     '126 countries',
     'Country search',
@@ -22,13 +26,5 @@ export const PACKAGE_META = {
 };
 
 export function getDemoUrl() {
-  if (PACKAGE_META.demoUrl) {
-    return PACKAGE_META.demoUrl;
-  }
-
-  if (typeof window !== 'undefined' && window.location?.origin) {
-    return window.location.origin;
-  }
-
-  return 'http://localhost:5180';
+  return PACKAGE_META.demoUrl || LINKS.demo;
 }

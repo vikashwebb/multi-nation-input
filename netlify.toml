@@ -1,0 +1,12 @@
+[build]
+  base = "example/web-form"
+  command = "npm install --legacy-peer-deps && npm run build"
+  publish = "dist"
+
+[build.environment]
+  VITE_DEMO_URL = "https://multi-nation-input.netlify.app/"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
